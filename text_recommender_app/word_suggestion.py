@@ -7,7 +7,7 @@ class WordSuggestion:
         if len(self.after_words) == 1:
             self.suggestions = [self.after_words[0], 'of', 'the']
         elif len(self.after_words) == 2:
-            self.suggestions = [self.after_words[0], 'of']
+            self.suggestions = [self.after_words[0], self.after_words[1], 'of']
         else:
             self.suggestions = after_words[0:3]
 

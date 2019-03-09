@@ -47,8 +47,6 @@ def first_input():
 
 def clean_word(word):
 
-    word = word.lower()
-
     #Replace all punctuation
     word = re.sub(r'[^\w\s]', '', word)
 
