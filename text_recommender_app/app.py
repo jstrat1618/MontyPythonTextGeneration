@@ -63,6 +63,9 @@ def append_text(next_text, text_so_far):
     if next_text in ['.', '?', '!', ',', "'", '"']:
         text = text_so_far + next_text
 
+    elif next_text == 'Q':
+        text = text_so_far
+
     else:
         text = text_so_far + " " + next_text
 
