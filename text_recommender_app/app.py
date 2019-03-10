@@ -61,13 +61,13 @@ def extract_last_word(text):
 
 def append_text(next_text, text_so_far):
     if next_text in ['.', '?', '!', ',', "'", '"']:
-        text = text_so_far + next_text
+        text = (text_so_far + next_text, '')
 
     elif next_text == 'Q':
-        text = text_so_far
+        text = (text_so_far, 'Q')
 
     else:
-        text = text_so_far + " " + next_text
+        text = (text_so_far + " " + next_text, '')
 
     return text
 
@@ -118,15 +118,16 @@ def next_text(last_word, word_data):
 def main_loop(text_so_far, word_data):
 
     last_word = extract_last_word(text_so_far)
+    stop = ''
 
-    while last_word != "Q":
+    while not stop:
         print(text_so_far)
 
         last_word = clean_word(last_word)
 
         next_input = next_text(last_word, word_data)
 
-        text_so_far = append_text(next_input, text_so_far)
+        text_so_far,stop = append_text(next_input, text_so_far)
 
         last_word = extract_last_word(text_so_far)
 
