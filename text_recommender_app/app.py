@@ -47,6 +47,8 @@ def first_input():
 
 def clean_word(word):
 
+    word = word.strip()
+
     #Replace all punctuation
     word = re.sub(r'[^\w\s]', '', word)
 
@@ -59,12 +61,30 @@ def extract_last_word(text):
 
     return words[-1]
 
+def remove_trailing_Q(text):
+    words = text.split(' ')
+
+    words = words[:-1]
+
+    return ' '.join(words)
+
 def append_text(next_text, text_so_far):
+
+    last_word = extract_last_word(next_text)
+
+    print("Value of last word is {}".format(last_word))
+
     if next_text in ['.', '?', '!', ',', "'", '"']:
         text = (text_so_far + next_text, '')
 
     elif next_text == 'Q':
         text = (text_so_far, 'Q')
+
+    elif last_word == 'Q':
+
+        remaining_text = remove_trailing_Q(next_text)
+
+        text = (text_so_far + " " + remaining_text, 'Q')
 
     else:
         text = (text_so_far + " " + next_text, '')
@@ -118,6 +138,7 @@ def next_text(last_word, word_data):
 def main_loop(text_so_far, word_data):
 
     last_word = extract_last_word(text_so_far)
+
     stop = ''
 
     while not stop:
@@ -127,7 +148,7 @@ def main_loop(text_so_far, word_data):
 
         next_input = next_text(last_word, word_data)
 
-        text_so_far,stop = append_text(next_input, text_so_far)
+        text_so_far, stop = append_text(next_input, text_so_far)
 
         last_word = extract_last_word(text_so_far)
 
@@ -150,8 +171,13 @@ def main():
     #Ask user to start typing
     text = first_input()
 
-    #Enter loop
-    main_text = main_loop(text_so_far=text, word_data = word_data)
+    last_word = extract_last_word(text)
+
+    if last_word =='Q':
+        main_text = remove_trailing_Q(text)
+    else:
+        # Enter loop
+        main_text = main_loop(text_so_far=text, word_data=word_data)
 
     print("You Wrote: ")
     print(main_text)
