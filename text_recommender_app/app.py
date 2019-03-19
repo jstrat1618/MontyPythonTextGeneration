@@ -72,8 +72,6 @@ def append_text(next_text, text_so_far):
 
     last_word = extract_last_word(next_text)
 
-    print("Value of last word is {}".format(last_word))
-
     if next_text in ['.', '?', '!', ',', "'", '"']:
         text = (text_so_far + next_text, '')
 
